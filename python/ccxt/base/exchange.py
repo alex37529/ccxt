@@ -2704,7 +2704,11 @@ class Exchange(object):
     def parse_markets(self, markets):
         result = []
         for i in range(0, len(markets)):
-            result.append(self.parse_market(markets[i]))
+            try:
+                # Ignore broken market data
+                result.append(self.parse_market(markets[i]))
+            except Exception:
+                continue
         return result
 
     def parse_ticker(self, ticker: dict, market: Market = None):
